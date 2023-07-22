@@ -2,7 +2,7 @@ import torch
 import argparse
 from mask import Mask
 from utils import get_data, set_seed
-from model import GNNEncoder, EdgeDecoder, DegreeDecoder, MaskGAE
+from model import GNNEncoder, EdgeDecoder, DegreeDecoder, GMAE
 # main parameter
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset", type=int, default=1, help="Choose Datasets (1 or 2)")
@@ -19,7 +19,7 @@ edge_decoder = EdgeDecoder(in_channels=128, hidden_channels=64, out_channels=1)
 degree_decoder = DegreeDecoder(in_channels=128, hidden_channels=64, out_channels=1)
 mask = Mask(p=args.p)
 
-model = MaskGAE(encoder, edge_decoder, degree_decoder, mask).cuda()
+model = GMAE(encoder, edge_decoder, degree_decoder, mask).cuda()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=5e-5)
 for epoch in range(1000):
     model.train()

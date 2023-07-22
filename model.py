@@ -83,9 +83,9 @@ def ce_loss(pos_out, neg_out):
     return pos_loss + neg_loss
 
 
-class MaskGAE(nn.Module):
+class GMAE(nn.Module):
     def __init__(self, encoder, edge_decoder, degree_decoder, mask):
-        super(MaskGAE, self).__init__()
+        super(GMAE, self).__init__()
         self.encoder = encoder
         self.edge_decoder = edge_decoder
         self.degree_decoder = degree_decoder
@@ -93,7 +93,7 @@ class MaskGAE(nn.Module):
         self.loss_fn = ce_loss
         self.negative_sampler = negative_sampling
 
-    def train_epoch(self, data, optimizer, alpha, batch_size=2 ** 16, grad_norm=1.0):
+    def train_epoch(self, data, optimizer, alpha, batch_size=8192, grad_norm=1.0):
         x, edge_index = data.x, data.edge_index
         remaining_edges, masked_edges = self.mask(edge_index)
         aug_edge_index, _ = add_self_loops(edge_index)

@@ -1,4 +1,4 @@
-# GMAEMMA
+# JMSSMMA
 graph-based masked autoencoder approach for inferring associations of small molecule-miRNA
 
 ## Main requirements
